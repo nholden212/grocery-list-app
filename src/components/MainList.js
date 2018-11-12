@@ -5,17 +5,36 @@ class MainList extends Component {
     super(props);
     this.state = {
       lists: [],
-      inputText: ""
+      inputText: "",
+      editedList: "",
+      editText: ""
     };
     this.mainListRef = this.props.firebase.database().ref('lists');
   }
 
   componentDidMount(){
+
     this.mainListRef.on('child_added', snapshot => {
       const list = snapshot.val();
       list.key = snapshot.key;
-      this.setState({ lists: this.state.lists.concat( list )});
+      var lists = this.state.lists.concat(list);
+      this.setState({ lists: lists });
     })
+
+    this.mainListRef.on('child_changed', snapshot => {
+      const list = snapshot.val();
+      list.key = snapshot.key;
+      var lists = this.state.lists;
+
+      for(let i=0; i<lists.length; i++){
+        if(lists[i].key === list.key){
+          lists[i].name = list.name;
+        }
+      }
+
+      this.setState({ lists: lists });
+    })
+
   }
 
   updateText(e){
@@ -31,14 +50,54 @@ class MainList extends Component {
     this.setState({ inputText: "" });
   }
 
+  setEditedList(key) {
+    this.setState({ editedList: key });
+  }
+
+  updateEditText(e) {
+    this.setState({ editText: e.target.value });
+  }
+
+  renameList(e, list) {
+    e.preventDefault();
+    if (!this.state.editText) { return }
+    var listToRename = this.mainListRef.child(list.key);
+    listToRename.update({
+      name: this.state.editText
+    });
+    this.setState({ editText: "", editedList: "" });
+  }
+
   render(){
+
+    var lists = (
+      this.state.lists.map( (list, index) => {
+        if(list.key === this.state.editedList){
+          return  <div key={index}>
+                    <p onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</p>
+                    <form onSubmit={(e) => this.renameList(e, list)}>
+                      <input
+                        type="text"
+                        id="rename-input"
+                        value={this.state.editText}
+                        onChange={(e) => this.updateEditText(e)}>
+                      </input>
+                      <button type="submit">Rename</button>
+                    </form>
+                  </div>
+        } else {
+          return  <div key={index}>
+                    <p onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</p>
+                    <button onClick={() => this.setEditedList(list.key)}>Edit</button>
+                  </div>
+        }
+    }));
+
     return(
       <div id="main-list">
         <div>
           <h1>Your lists:</h1>
-          {this.state.lists.map( (list, index) =>
-            <div key={index} onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</div>
-          )}
+          {lists}
         </div>
         <form onSubmit={(e) => this.createList(e)}>
           <h3>New list:</h3>

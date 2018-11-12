@@ -17,7 +17,7 @@ class List extends Component {
     this.itemsRef.on('child_added', snapshot => {
       const item = snapshot.val();
       item.key = snapshot.key;
-      var items = this.state.items.concat(item)
+      var items = this.state.items.concat(item);
       this.setState({ items: items });
     })
 
@@ -85,8 +85,7 @@ class List extends Component {
     itemToUpdate.update({
       content: this.state.editText
     });
-    this.setState({ editText: "" });
-    this.setState({ editedItem: "" });
+    this.setState({ editText: "", editedItem: "" });
   }
 
   deleteItem(item) {
@@ -107,7 +106,7 @@ class List extends Component {
                       <form onSubmit={(e) => this.updateItem(e, item)}>
                         <input
                           type="text"
-                          id="new-list-input"
+                          id="edit-input"
                           value={this.state.editText}
                           onChange={(e) => this.updateEditText(e)}>
                         </input>

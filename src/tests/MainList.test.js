@@ -1,29 +1,23 @@
-it('should update the text', () => {
-  const e = {
-    target: {
-      value: "test"
-    }
-  }
+//updateText
+it('should update the state with the input text')
+it('should render the input text')
 
-  updateText(e);
+//createList
+it('should add a list to the firebase database')
+it('should render the new list in the main list')
 
-  expect(this.state.inputText).toBe("test");
-});
+//lists
+it('should display the main list')
 
-it('should add a list to the main list', () => {
-  const e = {
-    target: {
-      value: "test-list-name"
-    }
-  }
+//setEditedList
+it('should update the state with the list to edit')
+it('should render the edit form for the list to rename')
+it('should not render the edit form for other lists')
 
-  updateText(e);
-  createRoom(e);
+//updateEditText
+it('should update the state with the edit text')
+it('should render the edit text')
 
-  expect(this.state.lists).toContain({ name: "test-list-name"});
-})
-
-it('should update the active list', () => {
-  this.props.activateList(1, "test");
-  expect(this.state.activeList).toBe("test");
-})
+//renameList
+it('should update the list in the firebase database')
+it('should render the renamed list in the main list')
