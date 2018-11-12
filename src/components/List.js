@@ -29,6 +29,7 @@ class List extends Component {
       for(let i=0; i<items.length; i++){
         if(items[i].key === item.key){
           items[i].content = item.content;
+          items[i].purchased = item.purchased;
         }
       }
 
@@ -63,7 +64,8 @@ class List extends Component {
     if (!this.state.inputText) { return }
     this.itemsRef.push({
       content: this.state.inputText,
-      listId: this.props.activeListId
+      listId: this.props.activeListId,
+      purchased: false
     });
     this.setState({ inputText: "" });
   }
@@ -89,6 +91,19 @@ class List extends Component {
   deleteItem(item) {
     var itemToDelete = this.itemsRef.child(item.key);
     itemToDelete.remove();
+  }
+
+  togglePurchased(item) {
+    var itemToToggle = this.itemsRef.child(item.key);
+    var purchased = item.purchased;
+    if(purchased){
+      purchased = false;
+    } else {
+      purchased = true;
+    }
+    itemToToggle.update({
+      purchased: purchased
+    })
   }
 
   render(){
@@ -118,6 +133,8 @@ class List extends Component {
                       <p>{item.content}</p>
                       <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
                       <button onClick={() => this.deleteItem(item)}>Delete</button>
+                      <button onClick={() => this.togglePurchased(item)}>Mark as Purchased</button>
+                      <p>Item purchased: {item.purchased}</p>
                     </div>
 
           }
