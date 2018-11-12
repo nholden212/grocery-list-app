@@ -127,9 +127,18 @@ class List extends Component {
                       </form>
                     </div>
 
+          } else if(item.purchased) {
+
+            return  <div className="item-purchased" key={index}>
+                      <p>{item.content}</p>
+                      <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
+                      <button onClick={() => this.deleteItem(item)}>Delete</button>
+                      <button onClick={() => this.togglePurchased(item)}>Mark as Purchased</button>
+                    </div>
+
           } else {
 
-            return  <div key={index}>
+            return  <div className="item-not-purchased" key={index}>
                       <p>{item.content}</p>
                       <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
                       <button onClick={() => this.deleteItem(item)}>Delete</button>

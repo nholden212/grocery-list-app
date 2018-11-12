@@ -34,3 +34,11 @@
 #main-list{
   float: left;
 }
+
+.item-purchased{
+  color: green
+}
+
+.item-not-purchased{
+  color: red
+}
