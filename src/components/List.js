@@ -108,6 +108,14 @@ class List extends Component {
 
   render(){
 
+    var purchased = () => {
+      if(item.purchased){
+        return <p>Item is already purchased</p>
+      } else {
+        return <p>Item is not purchased</p>
+      }
+    };
+
     var currentItems = (
       this.state.items.map( (item, index) => {
         if(item.listId === this.props.activeListId){
@@ -134,7 +142,7 @@ class List extends Component {
                       <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
                       <button onClick={() => this.deleteItem(item)}>Delete</button>
                       <button onClick={() => this.togglePurchased(item)}>Mark as Purchased</button>
-                      <p>Item purchased: {item.purchased}</p>
+                      {purchased()}
                     </div>
 
           }
