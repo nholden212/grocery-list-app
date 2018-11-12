@@ -89,10 +89,10 @@ class MainList extends Component {
 
   deleteList(list) {
     var listToDelete = this.mainListRef.child(list.key);
-    listToDelete.remove();
     if(this.props.activeListId === list.key){
       this.props.deactivateList();
     }
+    listToDelete.remove();
   }
 
   render(){
@@ -113,30 +113,31 @@ class MainList extends Component {
                     </form>
                   </div>
         } else {
-          return  <div key={index}>
-                    <p onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</p>
-                    <button onClick={() => this.setEditedList(list.key)}>Edit</button>
-                    <button onClick={() => this.deleteList(list)}>Delete</button>
+          return  <div className="list-item" key={index}>
+                    <span onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</span>
+                    <i class="material-icons md-17 vert-align-middle" onClick={() => this.setEditedList(list.key)}>create</i>
+                    <i class="material-icons md-17 vert-align-middle" onClick={() => this.deleteList(list)}>delete</i>
                   </div>
         }
     }));
 
     return(
-      <div id="main-list">
-        <div>
-          <h1>Your lists:</h1>
+      <div>
+        <div className="list">
+          <h1>Select list:</h1>
           {lists}
         </div>
         <form onSubmit={(e) => this.createList(e)}>
-          <h3>New list:</h3>
-          <label htmlFor="new-list-input">Name:</label>
-          <input
-            type="text"
-            id="new-list-input"
-            value={this.state.inputText}
-            onChange={(e) => this.updateText(e)}>
-          </input>
-          <button type="submit">Submit</button>
+          <div>
+            <label htmlFor="new-list-input">New: </label>
+            <input
+              type="text"
+              id="new-list-input"
+              value={this.state.inputText}
+              onChange={(e) => this.updateText(e)}>
+            </input>
+            <button type="submit">Submit</button>
+          </div>
         </form>
       </div>
     )

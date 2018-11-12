@@ -3,9 +3,6 @@ import React, { Component } from 'react';
 class User extends Component {
   constructor(props){
     super(props);
-    this.state = {
-      user: this.props.user
-    };
     this.signIn = this.signIn.bind(this);
     this.signOut = this.signOut.bind(this);
   }
@@ -27,11 +24,12 @@ class User extends Component {
   render(){
     const provider = new this.props.firebase.auth.GoogleAuthProvider();
     return(
-      <section className="User">
-        <div>Active user: {this.props.user}</div>
-        <button onClick={() => this.signIn(provider)}>Sign in with Google</button>
-        <button onClick={this.signOut}>Sign out</button>
-      </section>
+      <div className="User">
+        <p className="item-not-purchased">{this.props.message}</p>
+        Welcome, {this.props.user}
+        <button className="auth-button" onClick={() => this.signIn(provider)}>Sign in</button>
+        <button className="auth-button" onClick={this.signOut}>Sign out</button>
+      </div>
     )
   }
 }

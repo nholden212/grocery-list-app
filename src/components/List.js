@@ -117,32 +117,33 @@ class List extends Component {
             return  <div key={index}>
                       <p>{item.content}</p>
                       <form onSubmit={(e) => this.updateItem(e, item)}>
+                        <label htmlFor="edit-input">New value: </label>
                         <input
                           type="text"
                           id="edit-input"
                           value={this.state.editText}
                           onChange={(e) => this.updateEditText(e)}>
                         </input>
-                        <button type="submit">Edit</button>
+                        <button type="submit">Update</button>
                       </form>
                     </div>
 
           } else if(item.purchased) {
 
             return  <div className="item-purchased" key={index}>
-                      <p>{item.content}</p>
-                      <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
-                      <button onClick={() => this.deleteItem(item)}>Delete</button>
-                      <button onClick={() => this.togglePurchased(item)}>Mark as Purchased</button>
+                      {item.content}
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.setEditedItem(item.key)}>create</i>
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.deleteItem(item)}>delete</i>
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.togglePurchased(item)}>clear</i>
                     </div>
 
           } else {
 
             return  <div className="item-not-purchased" key={index}>
-                      <p>{item.content}</p>
-                      <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
-                      <button onClick={() => this.deleteItem(item)}>Delete</button>
-                      <button onClick={() => this.togglePurchased(item)}>Mark as Purchased</button>
+                      {item.content}
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.setEditedItem(item.key)}>create</i>
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.deleteItem(item)}>delete</i>
+                      <i class="material-icons md-17 vert-align-middle" onClick={() => this.togglePurchased(item)}>done</i>
                     </div>
 
           }
@@ -154,7 +155,7 @@ class List extends Component {
     var form = () => {
       if(this.props.activeList){
         return  <form id="addItem" onSubmit={(e) => this.addItem(e)}>
-                  <label htmlFor="item-input">Add:</label>
+                  <label htmlFor="item-input">Add: </label>
                   <input
                     type="text"
                     id="item-input"
@@ -168,9 +169,9 @@ class List extends Component {
     }
 
     return(
-      <div className="list">
+      <div>
         <h2>{this.props.activeList}</h2>
-        <div className="items">
+        <div className="list">
           {currentItems}
         </div>
           {form()}

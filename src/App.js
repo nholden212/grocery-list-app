@@ -21,6 +21,8 @@ class App extends Component {
     this.state = {
       activeListId: "",
       activeList: "",
+      user: "",
+      message: ""
     };
   }
 
@@ -41,11 +43,13 @@ class App extends Component {
   setUser(user){
     if(user === null){
       this.setState({
-        user: "Guest"
+        user: "Guest",
+        message: "You must be signed in to perform actions"
       });
     } else {
       this.setState({
-        user: user.displayName
+        user: user.displayName,
+        message: ""
       });
     }
   }
@@ -53,10 +57,13 @@ class App extends Component {
   render() {
     return (
       <div className="App">
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
+              rel="stylesheet"></link>
         <User
           firebase={firebase}
           user={this.state.user}
           setUser={(user) => this.setUser(user)}
+          message={this.state.message}
         />
         <MainList
           firebase={firebase}
