@@ -135,7 +135,7 @@ class List extends Component {
 
           } else if(item.purchased) {
 
-            return  <div className="item-purchased" key={index}>
+            return  <div className="green-text" key={index}>
                       {item.content}
                       <i class="material-icons md-17 vert-align-middle" onClick={() => this.setEditedItem(item.key)}>create</i>
                       <i class="material-icons md-17 vert-align-middle" onClick={() => this.deleteItem(item)}>delete</i>
@@ -144,7 +144,7 @@ class List extends Component {
 
           } else {
 
-            return  <div className="item-not-purchased" key={index}>
+            return  <div className="red-text" key={index}>
                       {item.content}
                       <i class="material-icons md-17 vert-align-middle" onClick={() => this.setEditedItem(item.key)}>create</i>
                       <i class="material-icons md-17 vert-align-middle" onClick={() => this.deleteItem(item)}>delete</i>
@@ -174,7 +174,7 @@ class List extends Component {
     }
 
     return(
-      <div>
+      <div className="ListComponent full">
         <h2>{this.props.activeList}</h2>
         <div className="list">
           {currentItems}

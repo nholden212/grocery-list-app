@@ -126,7 +126,7 @@ class MainList extends Component {
     }));
 
     return(
-      <div>
+      <div className="MainListComponent full">
         <div className="list">
           <h1>Select list:</h1>
           {lists}

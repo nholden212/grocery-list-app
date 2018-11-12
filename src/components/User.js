@@ -24,8 +24,8 @@ class User extends Component {
   render(){
     const provider = new this.props.firebase.auth.GoogleAuthProvider();
     return(
-      <div className="User">
-        <p className="item-not-purchased">{this.props.message}</p>
+      <div className="UserComponent">
+        <p className="red-text">{this.props.message}</p>
         Welcome, {this.props.user}
         <button className="auth-button" onClick={() => this.signIn(provider)}>Sign in</button>
         <button className="auth-button" onClick={this.signOut}>Sign out</button>

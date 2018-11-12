@@ -24,10 +24,36 @@
   margin-bottom: 15px;
 }
 
-.item-purchased{
-  color: green
+.green-text{
+  color: green;
+  font-weight: bold;
 }
 
-.item-not-purchased{
+.red-text{
   color: red
+}
+
+/*Components and Layout*/
+
+body > #root > div > .full {
+  height: 100vh;
+}
+
+.UserComponent {
+  background-image: linear-gradient(#bea5c6, #a689af);
+  padding-top: 2%;
+  padding-bottom: 2%;
+  font-weight: bold;
+}
+
+.MainListComponent {
+  float: left;
+  width: 33%;
+  background-image: linear-gradient(#ffccfa, #fc8af2);
+}
+
+.ListComponent {
+  float: left;
+  width: 67%;
+  background-image: linear-gradient(#ddc5e8, #cd99e5);
 }
