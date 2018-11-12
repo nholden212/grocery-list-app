@@ -1,35 +1,23 @@
-it('should update the text', () => {
-  const e = {
-    target: {
-      value: "test"
-    }
-  }
+//updateText
+it('should update the state with the input text')
+it('should render the input text')
 
-  updateText(e);
+//addItem
+it('should add an item to the firebase database')
+it('should render the added item in the list')
 
-  expect(this.state.inputText).toBe("test");
-});
+//currentItems
+it('should display the list items')
 
-it('should add an item to the list', () => {
-  const e = {
-    target: {
-      content: "test-list-item",
-      listId: "1"
-    }
-  }
+//setEditedItem
+it('should update the state with the item to edit')
+it('should render the edit form for the item to edit')
+it('should not render the edit form for other items')
 
-  updateText(e);
-  addItem(e);
+//updateEditText
+it('should update the state with the edit text')
+it('should render the edit text')
 
-  const list = findIndexOf(this.state.lists, "1");
-
-  expect(list).toContain({ content: "test-list-item", listId: "1"});
-})
-
-it('should display the list items', () => {
-  var currentItems;
-
-  var component = render(<List />);
-
-  expect(component).toContain(currentItems);
-})
+//updateItem
+it('should update the item in the firebase database')
+it('should render the updated item in the list')

@@ -5,8 +5,7 @@ class MainList extends Component {
     super(props);
     this.state = {
       lists: [],
-      inputText: "",
-      activeList: this.props.activeList
+      inputText: ""
     };
     this.mainListRef = this.props.firebase.database().ref('lists');
   }

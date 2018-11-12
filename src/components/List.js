@@ -5,7 +5,9 @@ class List extends Component {
     super(props);
     this.state = {
       items: [],
-      inputText: ""
+      inputText: "",
+      editedItem: "",
+      editText: ""
     }
     this.itemsRef = this.props.firebase.database().ref('items');
   }
@@ -14,7 +16,22 @@ class List extends Component {
     this.itemsRef.on('child_added', snapshot => {
       const item = snapshot.val();
       item.key = snapshot.key;
-      this.setState({ items: this.state.items.concat( item ) });
+      var items = this.state.items.concat(item)
+      this.setState({ items: items });
+    })
+
+    this.itemsRef.on('child_changed', snapshot => {
+      const item = snapshot.val();
+      item.key = snapshot.key;
+      var items = this.state.items;
+
+      for(let i=0; i<items.length; i++){
+        if(items[i].key === item.key){
+          items[i].content = item.content;
+        }
+      }
+
+      this.setState({ items: items });
     })
   }
 
@@ -32,13 +49,50 @@ class List extends Component {
     this.setState({ inputText: "" });
   }
 
+  setEditedItem(key) {
+    this.setState({ editedItem: key });
+  }
+
+  updateEditText(e) {
+    this.setState({ editText: e.target.value });
+  }
+
+  updateItem(e, item) {
+    e.preventDefault();
+    if (!this.state.editText) { return }
+    var key = item.key;
+    var itemToUpdate = this.itemsRef.child(key);
+    itemToUpdate.update({
+      content: this.state.editText
+    });
+    this.setState({ editText: "" });
+    this.setState({ editedItem: "" });
+  }
+
   render(){
     var currentItems = (
-      this.state.items.map( (item) => {
+      this.state.items.map( (item, index) => {
         if(item.listId === this.props.activeListId){
-          return <div key={item.key}>
-                  <div>{item.content}</div>
-                </div>
+          if(item.key === this.state.editedItem){
+            return  <div key={index}>
+                      <p>{item.content}</p>
+                      <form onSubmit={(e) => this.updateItem(e, item)}>
+                        <input
+                          type="text"
+                          id="new-list-input"
+                          value={this.state.editText}
+                          onChange={(e) => this.updateEditText(e)}>
+                        </input>
+                        <button type="submit">Edit</button>
+                      </form>
+                    </div>
+          } else {
+            return  <div key={index}>
+                      <p>{item.content}</p>
+                      <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
+                    </div>
+          }
+
         }
         return null;
       })
