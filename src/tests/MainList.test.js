@@ -22,3 +22,8 @@ it('should add a list to the main list', () => {
 
   expect(this.state.lists).toContain({ name: "test-list-name"});
 })
+
+it('should update the active list', () => {
+  this.props.activateList(1, "test");
+  expect(this.state.activeList).toBe("test");
+})

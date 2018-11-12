@@ -6,6 +6,7 @@ class MainList extends Component {
     this.state = {
       lists: [],
       inputText: "",
+      activeList: this.props.activeList
     };
     this.mainListRef = this.props.firebase.database().ref('lists');
   }
@@ -37,7 +38,7 @@ class MainList extends Component {
         <div>
           <h1>Your lists:</h1>
           {this.state.lists.map( (list, index) =>
-            <div key={index}>{list.name}</div>
+            <div key={index} onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</div>
           )}
         </div>
         <form onSubmit={(e) => this.createList(e)}>
