@@ -62,6 +62,7 @@ class MainList extends Component {
 
   createList(e){
     e.preventDefault();
+    if(this.props.user === "Guest"){ return }
     if(!this.state.inputText){ return }
     this.mainListRef.push({
       name: this.state.inputText
@@ -70,6 +71,7 @@ class MainList extends Component {
   }
 
   setEditedList(key) {
+    if(this.props.user === "Guest"){ return }
     this.setState({ editedList: key });
   }
 
@@ -79,6 +81,7 @@ class MainList extends Component {
 
   renameList(e, list) {
     e.preventDefault();
+    if(this.props.user === "Guest"){ return }
     if (!this.state.editText) { return }
     var listToRename = this.mainListRef.child(list.key);
     listToRename.update({
@@ -88,6 +91,7 @@ class MainList extends Component {
   }
 
   deleteList(list) {
+    if(this.props.user === "Guest"){ return }
     var listToDelete = this.mainListRef.child(list.key);
     if(this.props.activeListId === list.key){
       this.props.deactivateList();

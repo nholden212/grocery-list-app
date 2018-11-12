@@ -61,6 +61,7 @@ class List extends Component {
 
   addItem(e) {
     e.preventDefault();
+    if(this.props.user === "Guest"){ return }
     if (!this.state.inputText) { return }
     this.itemsRef.push({
       content: this.state.inputText,
@@ -71,6 +72,7 @@ class List extends Component {
   }
 
   setEditedItem(key) {
+    if(this.props.user === "Guest"){ return }
     this.setState({ editedItem: key });
   }
 
@@ -80,6 +82,7 @@ class List extends Component {
 
   updateItem(e, item) {
     e.preventDefault();
+    if(this.props.user === "Guest"){ return }
     if (!this.state.editText) { return }
     var itemToUpdate = this.itemsRef.child(item.key);
     itemToUpdate.update({
@@ -89,11 +92,13 @@ class List extends Component {
   }
 
   deleteItem(item) {
+    if(this.props.user === "Guest"){ return }
     var itemToDelete = this.itemsRef.child(item.key);
     itemToDelete.remove();
   }
 
   togglePurchased(item) {
+    if(this.props.user === "Guest"){ return }
     var itemToToggle = this.itemsRef.child(item.key);
     var purchased = item.purchased;
     if(purchased){

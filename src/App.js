@@ -67,12 +67,14 @@ class App extends Component {
         />
         <MainList
           firebase={firebase}
+          user={this.state.user}
           activateList={(id, name) => this.activateList(id, name)}
           deactivateList={() => this.deactivateList()}
           activeListId={this.state.activeListId}
         />
         <List
           firebase={firebase}
+          user={this.state.user}
           activeListId={this.state.activeListId}
           activeList={this.state.activeList}
         />
