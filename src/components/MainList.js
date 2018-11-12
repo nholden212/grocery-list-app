@@ -10,6 +10,7 @@ class MainList extends Component {
       editText: ""
     };
     this.mainListRef = this.props.firebase.database().ref('lists');
+    this.itemsRef = this.props.firebase.database().ref('items');
   }
 
   componentDidMount(){
@@ -31,6 +32,24 @@ class MainList extends Component {
           lists[i].name = list.name;
         }
       }
+
+      this.setState({ lists: lists });
+    })
+
+    this.mainListRef.on('child_removed', snapshot => {
+      const list = snapshot.val();
+      list.key = snapshot.key;
+      var lists = this.state.lists;
+
+      var index;
+
+      for(let i=0; i<lists.length; i++){
+        if(lists[i].key === list.key){
+          index = i;
+        }
+      }
+
+      lists.splice(index, 1);
 
       this.setState({ lists: lists });
     })
@@ -68,6 +87,14 @@ class MainList extends Component {
     this.setState({ editText: "", editedList: "" });
   }
 
+  deleteList(list) {
+    var listToDelete = this.mainListRef.child(list.key);
+    listToDelete.remove();
+    if(this.props.activeListId === list.key){
+      this.props.deactivateList();
+    }
+  }
+
   render(){
 
     var lists = (
@@ -89,6 +116,7 @@ class MainList extends Component {
           return  <div key={index}>
                     <p onClick={() => this.props.activateList(list.key, list.name)}>{list.name}</p>
                     <button onClick={() => this.setEditedList(list.key)}>Edit</button>
+                    <button onClick={() => this.deleteList(list)}>Delete</button>
                   </div>
         }
     }));

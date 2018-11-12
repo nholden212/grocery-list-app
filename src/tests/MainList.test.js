@@ -21,3 +21,8 @@ it('should render the edit text')
 //renameList
 it('should update the list in the firebase database')
 it('should render the renamed list in the main list')
+
+//deleteList
+it('should delete the list from firebase')
+it('should remove the list from the rendered main list')
+it('should unrender the list items if it was the current list being shown')

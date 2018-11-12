@@ -40,12 +40,10 @@ class List extends Component {
       item.key = snapshot.key;
       var items = this.state.items;
 
-      var itemToDelete;
       var index;
 
       for(let i=0; i<items.length; i++){
         if(items[i].key === item.key){
-          itemToDelete = items[i];
           index = i;
         }
       }
@@ -128,21 +126,29 @@ class List extends Component {
       })
     );
 
+    var form = () => {
+      if(this.props.activeList){
+        return  <form id="addItem" onSubmit={(e) => this.addItem(e)}>
+                  <label htmlFor="item-input">Add:</label>
+                  <input
+                    type="text"
+                    id="item-input"
+                    value={this.state.inputText}
+                    onChange={(e) => this.updateText(e)}></input>
+                  <button type="submit">Submit</button>
+                </form>
+      } else {
+        return null;
+      }
+    }
+
     return(
       <div className="list">
         <h2>{this.props.activeList}</h2>
         <div className="items">
           {currentItems}
         </div>
-        <form id="addItem" onSubmit={(e) => this.addItem(e)}>
-          <label htmlFor="item-input">Add:</label>
-          <input
-            type="text"
-            id="item-input"
-            value={this.state.inputText}
-            onChange={(e) => this.updateText(e)}></input>
-          <button type="submit">Submit</button>
-        </form>
+          {form()}
       </div>
     )
   }

@@ -30,12 +30,21 @@ class App extends Component {
     })
   }
 
+  deactivateList(){
+    this.setState({
+      activeListId: "",
+      activeList: ""
+    })
+  }
+
   render() {
     return (
       <div className="App">
         <MainList
           firebase={firebase}
           activateList={(id, name) => this.activateList(id, name)}
+          deactivateList={() => this.deactivateList()}
+          activeListId={this.state.activeListId}
         />
         <List
           firebase={firebase}
