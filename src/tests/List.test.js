@@ -21,3 +21,7 @@ it('should render the edit text')
 //updateItem
 it('should update the item in the firebase database')
 it('should render the updated item in the list')
+
+//deleteItem
+it('should delete the item from firebase')
+it('should remove the item from the rendered list')

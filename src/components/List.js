@@ -13,6 +13,7 @@ class List extends Component {
   }
 
   componentDidMount() {
+
     this.itemsRef.on('child_added', snapshot => {
       const item = snapshot.val();
       item.key = snapshot.key;
@@ -30,6 +31,26 @@ class List extends Component {
           items[i].content = item.content;
         }
       }
+
+      this.setState({ items: items });
+    })
+
+    this.itemsRef.on('child_removed', snapshot => {
+      const item = snapshot.val();
+      item.key = snapshot.key;
+      var items = this.state.items;
+
+      var itemToDelete;
+      var index;
+
+      for(let i=0; i<items.length; i++){
+        if(items[i].key === item.key){
+          itemToDelete = items[i];
+          index = i;
+        }
+      }
+
+      items.splice(index, 1);
 
       this.setState({ items: items });
     })
@@ -60,8 +81,7 @@ class List extends Component {
   updateItem(e, item) {
     e.preventDefault();
     if (!this.state.editText) { return }
-    var key = item.key;
-    var itemToUpdate = this.itemsRef.child(key);
+    var itemToUpdate = this.itemsRef.child(item.key);
     itemToUpdate.update({
       content: this.state.editText
     });
@@ -69,11 +89,19 @@ class List extends Component {
     this.setState({ editedItem: "" });
   }
 
+  deleteItem(item) {
+    var itemToDelete = this.itemsRef.child(item.key);
+    itemToDelete.remove();
+  }
+
   render(){
+
     var currentItems = (
       this.state.items.map( (item, index) => {
         if(item.listId === this.props.activeListId){
+
           if(item.key === this.state.editedItem){
+
             return  <div key={index}>
                       <p>{item.content}</p>
                       <form onSubmit={(e) => this.updateItem(e, item)}>
@@ -86,13 +114,16 @@ class List extends Component {
                         <button type="submit">Edit</button>
                       </form>
                     </div>
+
           } else {
+
             return  <div key={index}>
                       <p>{item.content}</p>
                       <button onClick={() => this.setEditedItem(item.key)}>Edit</button>
+                      <button onClick={() => this.deleteItem(item)}>Delete</button>
                     </div>
-          }
 
+          }
         }
         return null;
       })
@@ -116,7 +147,6 @@ class List extends Component {
       </div>
     )
   }
-
 }
 
 export default List;
