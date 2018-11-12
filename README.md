@@ -1,7 +1,7 @@
 
 Before you go any further, take a look at the deployed app [here!](https://nholden212-grocery-list-app.herokuapp.com/)
 
-#### Basic Grocery List App
+# Basic Grocery List App
 
 This app is a basic list-making app built in React.js using create-react-app (info on create-react-app is at the bottom of this readme).
 This is only the fourth app I've built in React and the first without instruction, so I was all on my own. I also built this project in a day - I was very pressed for time and had to build out the basics before I could add new features. What you see is what you get!
@@ -24,10 +24,10 @@ For each item in the list, you can perform CRUD operations by clicking on the ic
 The icons used in the design are from Material Design Icons, a useful icon pack (also from Google) that you can find [here](https://material.io/tools/icons/).
 
 
-\* * * * * *
+\* * * * *
 
 
-#### Create-React-App:
+# Create-React-App:
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
