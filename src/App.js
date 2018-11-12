@@ -3,6 +3,7 @@ import './App.css';
 import * as firebase from 'firebase';
 import MainList from './components/MainList.js';
 import List from './components/List.js';
+import User from './components/User.js';
 
 var config = {
     apiKey: "AIzaSyCk3Fd6aI31DLLjsaaZFBLh8TcxoVAiBfM",
@@ -37,9 +38,26 @@ class App extends Component {
     })
   }
 
+  setUser(user){
+    if(user === null){
+      this.setState({
+        user: "Guest"
+      });
+    } else {
+      this.setState({
+        user: user.displayName
+      });
+    }
+  }
+
   render() {
     return (
       <div className="App">
+        <User
+          firebase={firebase}
+          user={this.state.user}
+          setUser={(user) => this.setUser(user)}
+        />
         <MainList
           firebase={firebase}
           activateList={(id, name) => this.activateList(id, name)}
